@@ -13,7 +13,7 @@ const BlogPage = () => {
         {
             title: "5 Tips Nyaman Saat Perjalanan Jauh Menggunakan Travel",
             excerpt: "Perjalanan antar kota bisa terasa melelahkan. Coba 5 tips jitu ini agar perjalanan darat Anda lebih santai dan nyaman sampai tujuan.",
-            image: "https://images.unsplash.com/photo-1544620347-c4fd4a3d5957?q=80&w=2069&auto=format&fit=crop",
+            image: "/images/blog/tips-travel.png",
             date: "12 Okt 2026",
             category: "Tips Travel",
             author: "Admin"
@@ -21,7 +21,7 @@ const BlogPage = () => {
         {
             title: "Rute Baru! Travel Jakarta - Semarang Kini Tersedia",
             excerpt: "Kabar gembira untuk pelanggan setia Rona Jaya Trans. Kami resmi membuka rute baru untuk perjalanan mudik atau dinas ke Semarang.",
-            image: "https://images.unsplash.com/photo-1542281286-9e0a16bb7366?q=80&w=1974&auto=format&fit=crop",
+            image: "/images/blog/new-route.png",
             date: "28 Sep 2026",
             category: "Info Promo",
             author: "Tim Rona"
@@ -29,7 +29,7 @@ const BlogPage = () => {
         {
             title: "Pilih Travel Door to Door atau Titip Point? Ini Bedanya",
             excerpt: "Masih bingung memilih layanan travel yang tepat? Mari kupas tuntas perbedaan serta keuntungan dari layanan jemput alamat vs pool ke pool.",
-            image: "https://images.unsplash.com/photo-1627988358487-eecc5320503f?q=80&w=2070&auto=format&fit=crop",
+            image: "/images/blog/door-to-door.png",
             date: "15 Sep 2026",
             category: "Panduan",
             author: "Admin"
@@ -37,7 +37,7 @@ const BlogPage = () => {
         {
             title: "Mengenal Fasilitas Kelas Eksekutif Rona Jaya Trans",
             excerpt: "Apa saja fasilitas yang akan Anda dapatkan di armada kelas eksekutif kami? Dari AC, Port USB, hingga kursi Reclining Seat yang empuk.",
-            image: "https://images.unsplash.com/photo-1570125909232-eb263c188f7e?q=80&w=2071&auto=format&fit=crop",
+            image: "/images/blog/executive-fleet.png",
             date: "05 Sep 2026",
             category: "Info Layanan",
             author: "Tim Rona"
@@ -45,7 +45,7 @@ const BlogPage = () => {
         {
             title: "5 Alasan Mengapa Harus Booking Travel Lebih Awal",
             excerpt: "Sering kehabisan kursi saat musim liburan? Menghindari lonjakan harga dengan memesan lebih awal adalah trik terbaik para traveler cerdas.",
-            image: "https://images.unsplash.com/photo-1506784951808-fe0f0b4d4dc0?q=80&w=2070&auto=format&fit=crop",
+            image: "/images/blog/booking-tips.png",
             date: "20 Agu 2026",
             category: "Tips Travel",
             author: "Admin"
@@ -53,7 +53,7 @@ const BlogPage = () => {
         {
             title: "Protokol Kesehatan Terkini di Armada Kami",
             excerpt: "Keamanan Anda adalah prioritas kami. Simak protokol kebersihan armada harian yang secara rutin dilakukan tim maintenance Rona Jaya Trans.",
-            image: "https://images.unsplash.com/photo-1610404099710-18e3ec879d77?q=80&w=2070&auto=format&fit=crop",
+            image: "/images/carousel-interior.webp", // Fallback to carousel interior
             date: "10 Agu 2026",
             category: "Info Layanan",
             author: "Tim Rona"
