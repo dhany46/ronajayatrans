@@ -1,7 +1,8 @@
 import React, { useState, useEffect } from 'react';
-import { Menu, X, Phone } from 'lucide-react';
+import { Menu, X, MessageCircle } from 'lucide-react';
 import { Link, useLocation } from 'react-router-dom';
 import logo from '../assets/logo.png';
+import { createWhatsAppLink } from '../utils/whatsapp';
 
 const Navbar = () => {
     const [isOpen, setIsOpen] = useState(false);
@@ -22,6 +23,8 @@ const Navbar = () => {
         { name: 'Testimoni', href: '/#testimonials' },
         { name: 'Artikel', href: '/blog' },
     ];
+
+    const waLink = createWhatsAppLink();
 
     const isBlogPage = location.pathname === '/blog';
 
@@ -54,8 +57,14 @@ const Navbar = () => {
                                 {link.name}
                             </Link>
                         ))}
-                        <a href="#contact" className="flex items-center gap-2 bg-rona-blue text-white px-5 py-2.5 rounded-full font-semibold hover:bg-blue-700 transition-colors shadow-lg shadow-rona-blue/30">
-                            <Phone size={18} />
+                        <a
+                            href={waLink}
+                            target="_blank"
+                            rel="noopener noreferrer"
+                            aria-label="Pesan sekarang lewat WhatsApp"
+                            className="flex items-center gap-2 bg-[#25D366] text-white px-5 py-2.5 rounded-full font-semibold hover:bg-[#1fb85a] transition-colors shadow-lg shadow-[#25D366]/30"
+                        >
+                            <MessageCircle size={18} />
                             <span>Pesan Sekarang</span>
                         </a>
                     </div>
@@ -87,8 +96,14 @@ const Navbar = () => {
                             </Link>
                         ))}
                         <div className="mt-4 pt-4 border-t border-white/10">
-                            <a href="#contact" className="w-full flex items-center justify-center gap-2 bg-rona-blue text-white px-5 py-3 rounded-xl font-semibold hover:bg-blue-700 transition-colors">
-                                <Phone size={18} />
+                            <a
+                                href={waLink}
+                                target="_blank"
+                                rel="noopener noreferrer"
+                                className="w-full flex items-center justify-center gap-2 bg-[#25D366] text-white px-5 py-3 rounded-xl font-semibold hover:bg-[#1fb85a] transition-colors"
+                                onClick={() => setIsOpen(false)}
+                            >
+                                <MessageCircle size={18} />
                                 <span>Pesan Sekarang via WA</span>
                             </a>
                         </div>

@@ -4,6 +4,7 @@ import { motion, AnimatePresence } from 'framer-motion';
 import DatePicker, { registerLocale } from 'react-datepicker';
 import { id } from 'date-fns/locale';
 import 'react-datepicker/dist/react-datepicker.css';
+import { createWhatsAppLink } from '../utils/whatsapp';
 
 registerLocale('id', id);
 
@@ -42,7 +43,7 @@ const Hero = () => {
             'Mohon info ketersediaan jadwalnya. Terima kasih!'
         ].join('\n');
 
-        const whatsappUrl = `https://wa.me/6285727658604?text=${encodeURIComponent(message)}`;
+        const whatsappUrl = createWhatsAppLink(message);
         window.open(whatsappUrl, '_blank');
     };
 
@@ -56,7 +57,7 @@ const Hero = () => {
         const [isOpen, setIsOpen] = useState(false);
 
         return (
-            <div className="relative">
+            <div className={`relative ${isOpen ? 'z-[120]' : 'z-20'}`}>
                 <label className="text-[11px] font-semibold text-slate-300 uppercase tracking-widest flex items-center gap-1.5 mb-2">
                     <Icon size={12} className="text-rona-mint" /> {label}
                 </label>
@@ -64,7 +65,7 @@ const Hero = () => {
                     <button
                         type="button"
                         onClick={() => setIsOpen(!isOpen)}
-                        className="w-full bg-white/[0.03] border border-white/[0.07] rounded-2xl px-5 py-3.5 text-sm text-white flex items-center justify-between hover:bg-white/[0.06] hover:border-white/10 transition-all duration-300"
+                        className="w-full bg-white/10 border border-white/20 rounded-2xl px-5 py-3.5 text-sm text-white flex items-center justify-between hover:bg-white/[0.15] hover:border-white/30 transition-all duration-300 shadow-inner"
                     >
                         <span>{value}</span>
                         <ChevronDown size={16} className={`text-slate-500 transition-transform duration-300 ${isOpen ? 'rotate-180' : ''}`} />
@@ -73,13 +74,13 @@ const Hero = () => {
                     <AnimatePresence>
                         {isOpen && (
                             <>
-                                <div className="fixed inset-0 z-40" onClick={() => setIsOpen(false)} />
+                                <div className="fixed inset-0 z-[110]" onClick={() => setIsOpen(false)} />
                                 <motion.div
                                     initial={{ opacity: 0, y: 10, scale: 0.95 }}
                                     animate={{ opacity: 1, y: 0, scale: 1 }}
                                     exit={{ opacity: 0, y: 10, scale: 0.95 }}
                                     transition={{ duration: 0.2 }}
-                                    className="absolute left-0 right-0 mt-2 z-50 bg-[#0d1b2a]/95 backdrop-blur-xl border border-white/[0.1] rounded-2xl overflow-hidden shadow-2xl py-2 max-h-60 overflow-y-auto scrollbar-thin scrollbar-thumb-white/10 scrollbar-track-transparent"
+                                    className="absolute left-0 right-0 z-[120] bottom-full mb-2 sm:bottom-auto sm:top-full sm:mb-0 sm:mt-2 bg-[#0d1b2a] backdrop-blur-xl border border-white/[0.12] rounded-2xl overflow-hidden shadow-2xl py-2 max-h-60 overflow-y-auto scrollbar-thin scrollbar-thumb-white/10 scrollbar-track-transparent"
                                 >
                                     {options.map((opt) => (
                                         <button
@@ -110,7 +111,7 @@ const Hero = () => {
     };
 
     return (
-        <section id="home" className="relative min-h-screen overflow-hidden bg-[#040d1b]">
+        <section id="home" className="relative min-h-screen overflow-x-hidden overflow-y-visible bg-[#040d1b]">
             {/* Premium Background Layers */}
             <div className="absolute inset-0">
                 {/* Base gradient */}
@@ -147,7 +148,7 @@ const Hero = () => {
                             initial={{ opacity: 0, scale: 0.9 }}
                             animate={{ opacity: 1, scale: 1 }}
                             transition={{ delay: 0.2, duration: 0.5 }}
-                            className="inline-flex items-center gap-2.5 px-4 py-2 sm:px-5 sm:py-2.5 rounded-full bg-white/[0.03] border border-white/10 text-rona-mint/90 mb-8 sm:mb-10 backdrop-blur-sm"
+                            className="relative inline-flex items-center gap-2.5 px-4 py-2 sm:px-5 sm:py-2.5 rounded-full bg-white/[0.03] border border-white/10 text-rona-mint/90 mb-8 sm:mb-10 backdrop-blur-sm"
                         >
                             <span className="relative flex h-2 w-2 sm:h-2.5 sm:w-2.5">
                                 <span className="animate-ping absolute inline-flex h-full w-full rounded-full bg-rona-mint opacity-75" />
@@ -171,11 +172,11 @@ const Hero = () => {
 
                         {/* CTA Buttons */}
                         <div className="flex flex-col sm:flex-row items-center gap-3 sm:gap-4 justify-center lg:justify-start mb-6 sm:mb-14 px-4 sm:px-0">
-                            <a href="#routes" className="w-full sm:w-auto px-8 py-4 rounded-2xl bg-gradient-to-r from-rona-mint to-[#3db38c] text-white font-bold text-base hover:shadow-lg hover:shadow-rona-mint/25 transition-all transform hover:-translate-y-0.5 active:scale-[0.98] flex items-center justify-center gap-2">
+                            <a href="#routes" className="w-auto px-6 sm:px-8 py-3 sm:py-4 rounded-2xl bg-gradient-to-r from-rona-mint to-[#3db38c] text-white font-bold text-[15px] sm:text-base hover:shadow-lg hover:shadow-rona-mint/25 transition-all transform hover:-translate-y-0.5 active:scale-[0.98] flex items-center justify-center gap-2 min-h-11">
                                 Lihat Rute & Tarif
                                 <ChevronRight size={18} />
                             </a>
-                            <a href="#features" className="w-full sm:w-auto px-8 py-4 rounded-2xl bg-white/5 border border-white/10 text-white font-semibold text-base hover:bg-white/10 transition-all flex items-center justify-center">
+                            <a href="#about" className="w-auto px-6 sm:px-8 py-3 sm:py-4 rounded-2xl bg-white/5 border border-white/10 text-white font-semibold text-[15px] sm:text-base hover:bg-white/10 transition-all flex items-center justify-center min-h-11">
                                 Mengapa Kami?
                             </a>
                         </div>
@@ -185,7 +186,7 @@ const Hero = () => {
                             initial={{ opacity: 0, y: 20 }}
                             animate={{ opacity: 1, y: 0 }}
                             transition={{ delay: 0.5, duration: 0.6 }}
-                            className="hidden lg:flex flex-nowrap items-center gap-10 mb-10 overflow-hidden"
+                            className="relative hidden lg:flex flex-nowrap items-center gap-10 mb-10 overflow-hidden"
                         >
                             {stats.map((stat, idx) => (
                                 <div key={idx} className="flex items-center gap-3 shrink-0 overflow-hidden">
@@ -206,14 +207,14 @@ const Hero = () => {
                         initial={{ opacity: 0, y: 40 }}
                         animate={{ opacity: 1, y: 0 }}
                         transition={{ duration: 0.8, delay: 0.3, ease: 'easeOut' }}
-                        className="lg:col-span-5"
+                        className="relative lg:col-span-5"
                     >
                         <div className="relative">
                             {/* Form glow */}
                             <div className="absolute -inset-4 bg-rona-mint/5 rounded-[3rem] blur-3xl opacity-40 pointer-events-none" />
                             <div className="absolute -inset-4 bg-rona-blue/10 rounded-[3rem] blur-3xl opacity-30 pointer-events-none translate-x-8 translate-y-8" />
 
-                            <div className="relative bg-gradient-to-br from-[#1a438e]/30 via-[#0d1b2a]/95 to-[#08111d]/98 backdrop-blur-3xl border border-white/[0.1] rounded-[2.5rem] p-8 sm:p-10 shadow-[0_32px_64px_-16px_rgba(0,0,0,0.8)]">
+                            <div className="relative bg-gradient-to-br from-[#1a438e]/40 via-[#0d1b2a]/98 to-[#0a1929]/95 backdrop-blur-3xl border border-white/[0.15] rounded-[2.5rem] p-8 sm:p-10 shadow-[0_32px_64px_-16px_rgba(0,0,0,0.8)]">
                                 {/* Form Header */}
                                 <div className="flex items-center gap-3 mb-7">
                                     <div className="w-10 h-10 rounded-xl bg-rona-mint/15 flex items-center justify-center">
@@ -246,8 +247,8 @@ const Hero = () => {
                                                         vehicle: 'Toyota Avanza'
                                                     })}
                                                     className={`py-3 rounded-2xl text-[11px] font-bold tracking-wider transition-all duration-300 border ${formData.service === opt.val
-                                                        ? 'bg-rona-mint/12 border-rona-mint/40 text-rona-mint shadow-[0_0_20px_rgba(76,201,161,0.15)]'
-                                                        : 'bg-white/[0.03] border-white/5 text-slate-500 hover:bg-white/[0.06] hover:border-white/10'
+                                                        ? 'bg-rona-mint/15 border-rona-mint/50 text-rona-mint shadow-[0_0_20px_rgba(76,201,161,0.2)]'
+                                                        : 'bg-white/[0.08] border-white/15 text-slate-400 hover:bg-white/[0.12] hover:border-white/25 hover:text-slate-300'
                                                         }`}
                                                 >
                                                     {opt.label}
@@ -265,7 +266,7 @@ const Hero = () => {
                                             type="text"
                                             placeholder="Contoh: Jakarta"
                                             required
-                                            className="w-full bg-white/[0.03] border border-white/[0.07] rounded-2xl px-5 py-3.5 text-sm text-white placeholder:text-slate-600 focus:outline-none focus:border-rona-mint/40 focus:bg-white/[0.05] focus:ring-4 focus:ring-rona-mint/10 transition-all duration-300"
+                                            className="w-full bg-white/10 border border-white/20 rounded-2xl px-5 py-3.5 text-sm text-white placeholder:text-slate-500 focus:outline-none focus:border-rona-mint/50 focus:bg-white/[0.15] focus:ring-4 focus:ring-rona-mint/15 transition-all duration-300 shadow-inner"
                                             value={formData.origin}
                                             onChange={(e) => setFormData({ ...formData, origin: e.target.value })}
                                         />
@@ -280,7 +281,7 @@ const Hero = () => {
                                             type="text"
                                             placeholder="Contoh: Bandung"
                                             required
-                                            className="w-full bg-white/[0.03] border border-white/[0.07] rounded-2xl px-5 py-3.5 text-sm text-white placeholder:text-slate-600 focus:outline-none focus:border-rona-mint/40 focus:bg-white/[0.05] focus:ring-4 focus:ring-rona-mint/10 transition-all duration-300"
+                                            className="w-full bg-white/10 border border-white/20 rounded-2xl px-5 py-3.5 text-sm text-white placeholder:text-slate-500 focus:outline-none focus:border-rona-mint/50 focus:bg-white/[0.15] focus:ring-4 focus:ring-rona-mint/15 transition-all duration-300 shadow-inner"
                                             value={formData.destination}
                                             onChange={(e) => setFormData({ ...formData, destination: e.target.value })}
                                         />
@@ -305,7 +306,7 @@ const Hero = () => {
                                                     { name: 'preventOverflow', options: { boundary: 'viewport', padding: 16 } },
                                                     { name: 'flip', options: { fallbackPlacements: ['top-start', 'top-end', 'bottom-start'] } }
                                                 ]}
-                                                className="w-full bg-white/[0.03] border border-white/[0.07] rounded-2xl px-5 py-3.5 text-sm text-white placeholder:text-slate-600 focus:outline-none focus:border-rona-mint/40 focus:bg-white/[0.05] focus:ring-4 focus:ring-rona-mint/10 transition-all duration-300 cursor-pointer"
+                                                className="w-full bg-white/10 border border-white/20 rounded-2xl px-5 py-3.5 text-sm text-white placeholder:text-slate-500 focus:outline-none focus:border-rona-mint/50 focus:bg-white/[0.15] focus:ring-4 focus:ring-rona-mint/15 transition-all duration-300 cursor-pointer shadow-inner"
                                                 calendarClassName="rona-datepicker"
                                                 required
                                             />
@@ -336,7 +337,7 @@ const Hero = () => {
                                                 <input
                                                     type="text"
                                                     placeholder="Cth: 5 kg"
-                                                    className="w-full bg-white/[0.03] border border-white/[0.07] rounded-2xl px-5 py-3.5 text-sm text-white placeholder:text-slate-600 focus:outline-none focus:border-rona-mint/40 focus:bg-white/[0.05] focus:ring-4 focus:ring-rona-mint/10 transition-all duration-300"
+                                                    className="w-full bg-white/10 border border-white/20 rounded-2xl px-5 py-3.5 text-sm text-white placeholder:text-slate-500 focus:outline-none focus:border-rona-mint/50 focus:bg-white/[0.15] focus:ring-4 focus:ring-rona-mint/15 transition-all duration-300 shadow-inner"
                                                     value={formData.weight}
                                                     onChange={(e) => setFormData({ ...formData, weight: e.target.value })}
                                                 />
@@ -366,7 +367,7 @@ const Hero = () => {
                                 initial={{ opacity: 0, y: 20 }}
                                 animate={{ opacity: 1, y: 0 }}
                                 transition={{ delay: 0.6, duration: 0.6 }}
-                                className="flex lg:hidden items-center justify-center gap-4 sm:gap-8 mt-8 px-2"
+                                className="relative flex lg:hidden items-center justify-center gap-4 sm:gap-8 mt-8 px-2"
                             >
                                 {stats.map((stat, idx) => (
                                     <div key={idx} className="flex items-center gap-1.5">

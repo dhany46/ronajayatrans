@@ -1,12 +1,10 @@
 import React from 'react';
 import { MessageCircle } from 'lucide-react';
 import { motion } from 'framer-motion';
+import { createWhatsAppLink } from '../utils/whatsapp';
 
 const FloatingWhatsApp = () => {
-    const phoneNumber = "6285727658604"; // Ganti dengan nomor asli
-    const message = "Halo Rona Jaya Trans, saya ingin pesan travel door to door.";
-
-    const whatsappUrl = `https://wa.me/${phoneNumber}?text=${encodeURIComponent(message)}`;
+    const whatsappUrl = createWhatsAppLink();
 
     return (
         <motion.div

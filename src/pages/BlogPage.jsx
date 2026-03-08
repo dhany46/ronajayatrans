@@ -1,64 +1,30 @@
-import React, { useEffect } from 'react';
+import React, { useEffect, useMemo, useState } from 'react';
 import { Calendar, User, ArrowRight, ChevronRight, Home as HomeIcon } from 'lucide-react';
 import { Link } from 'react-router-dom';
 import { motion } from 'framer-motion';
+import { blogPosts } from '../data/blogPosts';
 
 const BlogPage = () => {
     useEffect(() => {
         window.scrollTo(0, 0);
     }, []);
 
-    // Anda bisa memisahkan data ini nanti ke file terpisah atau memanggilnya dari API API
-    const allPosts = [
-        {
-            title: "5 Tips Nyaman Saat Perjalanan Jauh Menggunakan Travel",
-            excerpt: "Perjalanan antar kota bisa terasa melelahkan. Coba 5 tips jitu ini agar perjalanan darat Anda lebih santai dan nyaman sampai tujuan.",
-            image: "/images/blog/tips-travel.png",
-            date: "12 Okt 2026",
-            category: "Tips Travel",
-            author: "Admin"
-        },
-        {
-            title: "Rute Baru! Travel Jakarta - Semarang Kini Tersedia",
-            excerpt: "Kabar gembira untuk pelanggan setia Rona Jaya Trans. Kami resmi membuka rute baru untuk perjalanan mudik atau dinas ke Semarang.",
-            image: "/images/blog/new-route.png",
-            date: "28 Sep 2026",
-            category: "Info Promo",
-            author: "Tim Rona"
-        },
-        {
-            title: "Pilih Travel Door to Door atau Titip Point? Ini Bedanya",
-            excerpt: "Masih bingung memilih layanan travel yang tepat? Mari kupas tuntas perbedaan serta keuntungan dari layanan jemput alamat vs pool ke pool.",
-            image: "/images/blog/door-to-door.png",
-            date: "15 Sep 2026",
-            category: "Panduan",
-            author: "Admin"
-        },
-        {
-            title: "Mengenal Fasilitas Kelas Eksekutif Rona Jaya Trans",
-            excerpt: "Apa saja fasilitas yang akan Anda dapatkan di armada kelas eksekutif kami? Dari AC, Port USB, hingga kursi Reclining Seat yang empuk.",
-            image: "/images/blog/executive-fleet.png",
-            date: "05 Sep 2026",
-            category: "Info Layanan",
-            author: "Tim Rona"
-        },
-        {
-            title: "5 Alasan Mengapa Harus Booking Travel Lebih Awal",
-            excerpt: "Sering kehabisan kursi saat musim liburan? Menghindari lonjakan harga dengan memesan lebih awal adalah trik terbaik para traveler cerdas.",
-            image: "/images/blog/booking-tips.png",
-            date: "20 Agu 2026",
-            category: "Tips Travel",
-            author: "Admin"
-        },
-        {
-            title: "Protokol Kesehatan Terkini di Armada Kami",
-            excerpt: "Keamanan Anda adalah prioritas kami. Simak protokol kebersihan armada harian yang secara rutin dilakukan tim maintenance Rona Jaya Trans.",
-            image: "/images/carousel-interior.webp", // Fallback to carousel interior
-            date: "10 Agu 2026",
-            category: "Info Layanan",
-            author: "Tim Rona"
-        }
-    ];
+    const categories = ['Semua Artikel', 'Tips Travel', 'Info Promo', 'Info Layanan', 'Panduan'];
+    const [activeCategory, setActiveCategory] = useState('Semua Artikel');
+    const [currentPage, setCurrentPage] = useState(1);
+    const postsPerPage = 6;
+
+    const filteredPosts = useMemo(() => {
+        if (activeCategory === 'Semua Artikel') return blogPosts;
+        return blogPosts.filter((post) => post.category === activeCategory);
+    }, [activeCategory]);
+
+    const totalPages = Math.max(1, Math.ceil(filteredPosts.length / postsPerPage));
+
+    const paginatedPosts = useMemo(() => {
+        const startIndex = (currentPage - 1) * postsPerPage;
+        return filteredPosts.slice(startIndex, startIndex + postsPerPage);
+    }, [filteredPosts, currentPage]);
 
     const itemVariants = {
         hidden: { opacity: 0, y: 20 },
@@ -66,10 +32,10 @@ const BlogPage = () => {
     };
 
     return (
-        <div className="pt-24 min-h-screen bg-slate-50 pb-20">
+        <div className="min-h-screen bg-slate-50 pb-20">
 
             {/* Page Header */}
-            <div className="bg-slate-900 text-white py-16 mb-12 relative overflow-hidden">
+            <div className="bg-slate-900 text-white pt-24 sm:pt-28 pb-16 mb-12 relative overflow-hidden">
                 <div className="absolute inset-0 bg-rona-blue/20 mix-blend-overlay"></div>
                 <div className="absolute top-0 right-0 w-64 h-64 bg-rona-mint/10 rounded-full blur-3xl"></div>
 
@@ -92,10 +58,21 @@ const BlogPage = () => {
                     <span className="text-slate-900 font-semibold">Artikel</span>
                 </nav>
 
-                {/* Categories / Filter Options (Static for now) */}
+                {/* Categories / Filter Options */}
                 <div className="flex flex-wrap gap-3 mb-10">
-                    {["Semua Artikel", "Tips Travel", "Info Promo", "Info Layanan", "Panduan"].map((category, i) => (
-                        <button key={i} className={`px-5 py-2 rounded-full text-sm font-medium transition-all ${i === 0 ? 'bg-rona-blue text-white shadow-md shadow-rona-blue/20' : 'bg-white text-slate-600 hover:bg-slate-100 border border-slate-200'}`}>
+                    {categories.map((category) => (
+                        <button
+                            key={category}
+                            type="button"
+                            onClick={() => {
+                                setActiveCategory(category);
+                                setCurrentPage(1);
+                            }}
+                            className={`px-5 py-2 rounded-full text-sm font-medium transition-all ${activeCategory === category
+                                ? 'bg-rona-blue text-white shadow-md shadow-rona-blue/20'
+                                : 'bg-white text-slate-600 hover:bg-slate-100 border border-slate-200'
+                                }`}
+                        >
                             {category}
                         </button>
                     ))}
@@ -103,9 +80,9 @@ const BlogPage = () => {
 
                 {/* Blog Grid */}
                 <div className="grid md:grid-cols-2 lg:grid-cols-3 gap-8">
-                    {allPosts.map((post, idx) => (
+                    {paginatedPosts.map((post, idx) => (
                         <motion.div
-                            key={idx}
+                            key={post.slug}
                             variants={itemVariants}
                             initial="hidden"
                             animate="visible"
@@ -139,32 +116,66 @@ const BlogPage = () => {
                                 </div>
 
                                 <h4 className="text-xl font-bold text-slate-900 mb-3 line-clamp-2 group-hover:text-rona-blue transition-colors">
-                                    <a href="#">{post.title}</a>
+                                    <Link to={`/blog/${post.slug}`}>{post.title}</Link>
                                 </h4>
 
                                 <p className="text-slate-600 mb-6 line-clamp-3 leading-relaxed flex-1">
                                     {post.excerpt}
                                 </p>
 
-                                <a href="#" className="inline-flex items-center gap-2 font-bold text-rona-mint group-hover:text-rona-blue transition-colors text-sm uppercase tracking-wider mt-auto pt-4 border-t border-slate-50">
+                                <Link to={`/blog/${post.slug}`} className="inline-flex items-center gap-2 font-bold text-rona-mint group-hover:text-rona-blue transition-colors text-sm uppercase tracking-wider mt-auto pt-4 border-t border-slate-50">
                                     Baca Selengkapnya
                                     <ArrowRight size={16} />
-                                </a>
+                                </Link>
                             </div>
 
                         </motion.div>
                     ))}
                 </div>
 
-                {/* Pagination Dummy */}
-                <div className="mt-16 flex justify-center gap-2">
-                    <button className="w-10 h-10 rounded-full bg-rona-blue text-white font-medium flex items-center justify-center shadow-md">1</button>
-                    <button className="w-10 h-10 rounded-full bg-white text-slate-600 hover:bg-slate-100 border border-slate-200 font-medium flex items-center justify-center transition-colors">2</button>
-                    <button className="w-10 h-10 rounded-full bg-white text-slate-600 hover:bg-slate-100 border border-slate-200 font-medium flex items-center justify-center transition-colors">...</button>
-                    <button className="w-10 h-10 rounded-full bg-white text-slate-600 hover:bg-slate-100 border border-slate-200 font-medium flex items-center justify-center transition-colors">
-                        <ChevronRight size={18} />
-                    </button>
-                </div>
+                {paginatedPosts.length === 0 && (
+                    <div className="text-center py-16 bg-white rounded-2xl border border-slate-100">
+                        <p className="text-slate-600">Belum ada artikel untuk kategori ini.</p>
+                    </div>
+                )}
+
+                {totalPages > 1 && (
+                    <div className="mt-16 flex justify-center gap-2">
+                        <button
+                            type="button"
+                            onClick={() => setCurrentPage((prev) => Math.max(1, prev - 1))}
+                            disabled={currentPage === 1}
+                            className="w-10 h-10 rounded-full bg-white text-slate-600 hover:bg-slate-100 border border-slate-200 font-medium flex items-center justify-center transition-colors disabled:opacity-40 disabled:cursor-not-allowed"
+                            aria-label="Halaman sebelumnya"
+                        >
+                            <ChevronRight size={18} className="rotate-180" />
+                        </button>
+
+                        {Array.from({ length: totalPages }, (_, i) => i + 1).map((page) => (
+                            <button
+                                key={page}
+                                type="button"
+                                onClick={() => setCurrentPage(page)}
+                                className={`w-10 h-10 rounded-full font-medium flex items-center justify-center transition-colors ${currentPage === page
+                                    ? 'bg-rona-blue text-white shadow-md shadow-rona-blue/20'
+                                    : 'bg-white text-slate-600 hover:bg-slate-100 border border-slate-200'
+                                    }`}
+                            >
+                                {page}
+                            </button>
+                        ))}
+
+                        <button
+                            type="button"
+                            onClick={() => setCurrentPage((prev) => Math.min(totalPages, prev + 1))}
+                            disabled={currentPage === totalPages}
+                            className="w-10 h-10 rounded-full bg-white text-slate-600 hover:bg-slate-100 border border-slate-200 font-medium flex items-center justify-center transition-colors disabled:opacity-40 disabled:cursor-not-allowed"
+                            aria-label="Halaman berikutnya"
+                        >
+                            <ChevronRight size={18} />
+                        </button>
+                    </div>
+                )}
 
             </div>
         </div>

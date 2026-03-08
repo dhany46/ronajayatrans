@@ -2,34 +2,10 @@ import React from 'react';
 import { Calendar, User, ArrowRight } from 'lucide-react';
 import { motion } from 'framer-motion';
 import { Link } from 'react-router-dom';
+import { blogPosts } from '../data/blogPosts';
 
 const Blog = () => {
-    const posts = [
-        {
-            title: "5 Tips Nyaman Saat Perjalanan Jauh Menggunakan Travel",
-            excerpt: "Perjalanan antar kota bisa terasa melelahkan. Coba 5 tips jitu ini agar perjalanan darat Anda lebih santai dan nyaman sampai tujuan.",
-            image: "/images/blog/tips-travel.png",
-            date: "12 Okt 2026",
-            category: "Tips Travel",
-            author: "Admin"
-        },
-        {
-            title: "Rute Baru! Travel Jakarta - Semarang Kini Tersedia",
-            excerpt: "Kabar gembira untuk pelanggan setia Rona Jaya Trans. Kami resmi membuka rute baru untuk perjalanan mudik atau dinas ke Semarang.",
-            image: "/images/blog/new-route.png",
-            date: "28 Sep 2026",
-            category: "Info Promo",
-            author: "Tim Rona"
-        },
-        {
-            title: "Pilih Travel Door to Door atau Titip Point? Ini Bedanya",
-            excerpt: "Masih bingung memilih layanan travel yang tepat? Mari kupas tuntas perbedaan serta keuntungan dari layanan jemput alamat vs pool ke pool.",
-            image: "/images/blog/door-to-door.png",
-            date: "15 Sep 2026",
-            category: "Panduan",
-            author: "Admin"
-        }
-    ];
+    const posts = blogPosts.slice(0, 3);
 
     const containVariants = {
         hidden: { opacity: 0 },
@@ -45,20 +21,24 @@ const Blog = () => {
     };
 
     return (
-        <section id="blog" className="py-24 bg-white relative">
+        <section id="blog" className="py-16 sm:py-24 bg-[#edf3fb] relative">
             <div className="max-w-7xl mx-auto px-4 sm:px-6 lg:px-8 relative z-10">
 
                 {/* Header */}
-                <div className="flex flex-col md:flex-row md:items-end justify-between mb-16 gap-6">
-                    <div className="max-w-2xl">
-                        <h2 className="text-rona-blue font-semibold tracking-wide uppercase text-sm group inline-flex mb-3">
-                            Artikel & Berita
-                            <div className="h-0.5 w-8 bg-rona-mint mt-1 mx-auto" />
-                        </h2>
-                        <h3 className="text-3xl font-extrabold text-slate-900 sm:text-4xl">
-                            Informasi Terbaru Seputar Perjalanan Anda
-                        </h3>
+                <div className="text-center mb-16">
+                    <div className="inline-flex items-center gap-1.5 px-3.5 py-1.5 rounded-full bg-slate-100/50 border border-slate-200 shadow-sm text-rona-blue text-[13px] font-semibold mb-5 tracking-wide">
+                        <Calendar size={16} strokeWidth={2} className="text-rona-blue" />
+                        Artikel & Berita
                     </div>
+
+                    <h2 className="text-[2.1rem] sm:text-4xl lg:text-[2.75rem] font-extrabold text-[#111827] leading-[1.15] mb-6 tracking-tight">
+                        Informasi Terbaru <span className="text-transparent bg-clip-text bg-gradient-to-r from-rona-blue to-rona-mint italic">Seputar Perjalanan Anda</span>
+                    </h2>
+
+                    <p className="text-[15px] sm:text-base text-slate-600 leading-[1.7] max-w-2xl mx-auto mb-6">
+                        Temukan tips, promo, dan panduan perjalanan terbaru dari Rona Jaya Trans.
+                    </p>
+
                     <Link to="/blog" className="inline-flex items-center gap-2 font-semibold text-rona-blue hover:text-rona-mint transition-colors group whitespace-nowrap">
                         Lihat Semua Artikel
                         <ArrowRight size={20} className="group-hover:translate-x-1 transition-transform" />
@@ -74,7 +54,7 @@ const Blog = () => {
                     className="grid md:grid-cols-2 lg:grid-cols-3 gap-8"
                 >
                     {posts.map((post, idx) => (
-                        <motion.div key={idx} variants={itemVariants} className="bg-slate-50 rounded-3xl overflow-hidden border border-slate-100 hover:shadow-xl transition-all duration-300 group">
+                        <motion.div key={post.slug} variants={itemVariants} className="bg-slate-50 rounded-3xl overflow-hidden border border-slate-100 hover:shadow-xl transition-all duration-300 group">
 
                             {/* Image Container */}
                             <div className="relative h-60 overflow-hidden">
@@ -102,14 +82,14 @@ const Blog = () => {
                                 </div>
 
                                 <h4 className="text-xl font-bold text-slate-900 mb-3 line-clamp-2 group-hover:text-rona-blue transition-colors">
-                                    <Link to="/blog">{post.title}</Link>
+                                    <Link to={`/blog/${post.slug}`}>{post.title}</Link>
                                 </h4>
 
                                 <p className="text-slate-600 mb-6 line-clamp-3 leading-relaxed">
                                     {post.excerpt}
                                 </p>
 
-                                <Link to="/blog" className="inline-flex items-center gap-2 font-bold text-rona-blue hover:text-rona-mint transition-colors text-sm">
+                                <Link to={`/blog/${post.slug}`} className="inline-flex items-center gap-2 font-bold text-rona-blue hover:text-rona-mint transition-colors text-sm">
                                     Baca Selengkapnya
                                     <ArrowRight size={16} />
                                 </Link>
