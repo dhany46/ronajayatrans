@@ -21,9 +21,10 @@ const FloatingWhatsApp = () => {
                 href={whatsappUrl}
                 target="_blank"
                 rel="noopener noreferrer"
-                className="w-16 h-16 bg-green-500 rounded-full shadow-xl shadow-green-500/40 flex items-center justify-center text-white hover:bg-green-600 hover:scale-110 transition-all duration-300 relative group"
+                aria-label="Chat via WhatsApp"
+                className="w-16 h-16 bg-green-500 rounded-full shadow-xl shadow-green-500/40 flex items-center justify-center text-white hover:bg-green-600 hover:scale-110 active:scale-95 transition-all duration-300 relative group"
             >
-                <MessageCircle size={32} />
+                <MessageCircle size={32} className="transition-transform duration-200 group-active:scale-90" />
                 {/* Glow effect */}
                 <div className="absolute inset-0 rounded-full border-2 border-green-400 group-hover:animate-ping opacity-75"></div>
             </a>

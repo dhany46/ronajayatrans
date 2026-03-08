@@ -16,7 +16,7 @@ function App() {
   }, []);
   return (
     <BrowserRouter>
-      <div className="relative font-sans text-slate-900 bg-slate-50 min-h-screen scroll-smooth overflow-x-hidden">
+      <div className="relative font-sans text-slate-900 bg-slate-50 min-h-screen overflow-x-hidden">
         <Navbar />
         <Routes>
           <Route path="/" element={<Home />} />

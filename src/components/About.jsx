@@ -40,12 +40,12 @@ const About = () => {
     ];
 
     return (
-        <section id="about" ref={sectionRef} className="pt-24 pb-16 bg-slate-50 overflow-hidden font-sans relative">
+        <section id="about" ref={sectionRef} className="pt-16 sm:pt-24 pb-14 sm:pb-16 bg-slate-50 overflow-hidden font-sans relative">
             <div className="max-w-7xl mx-auto px-4 sm:px-6 lg:px-8 relative z-10">
-                <div className="flex flex-col lg:flex-row items-center justify-between gap-16 lg:gap-20 xl:gap-28">
+            <div className="flex flex-col lg:flex-row items-center justify-between gap-10 sm:gap-14 lg:gap-20 xl:gap-28">
 
                     {/* Left: Elegant Carousel */}
-                    <div className="w-full lg:w-[45%] xl:w-[42%] relative min-h-[420px] sm:min-h-[500px] flex flex-col justify-center mb-10 sm:mb-0 pb-8 sm:pb-0">
+                    <div className="w-full lg:w-[45%] xl:w-[42%] relative min-h-[330px] sm:min-h-[500px] flex flex-col justify-center mb-7 sm:mb-0 pb-6 sm:pb-0">
                         {/* Subtle Background Glow */}
                         <motion.div
                             style={{ y: blobY }}
@@ -55,7 +55,7 @@ const About = () => {
                         </motion.div>
 
                         {/* Card Stack Container (Poker Hand Style) */}
-                        <motion.div style={{ y: yCarousel }} className="relative w-[75%] sm:w-[60%] lg:w-[70%] xl:w-[65%] max-w-[340px] aspect-[3/4] mx-auto z-20">
+                        <motion.div style={{ y: yCarousel }} className="relative w-[68%] sm:w-[60%] lg:w-[70%] xl:w-[65%] max-w-[340px] aspect-[3/4] mx-auto z-20">
                             {carouselImages.map((src, index) => {
                                 // Calculate position in the stack: 
                                 // 0 = active/front, 1 = right/next, N-1 = left/previous
@@ -99,23 +99,29 @@ const About = () => {
                                             src={src}
                                             className="w-full h-full object-cover"
                                             alt={`Galeri ${index + 1}`}
+                                            loading="lazy"
+                                            decoding="async"
                                         />
                                     </motion.div>
                                 );
                             })}
 
                             {/* Ultra-Minimalist Indicators (Dots) */}
-                            <div className="absolute -bottom-12 left-1/2 -translate-x-1/2 flex gap-3 z-40">
+                            <div className="absolute -bottom-12 left-1/2 -translate-x-1/2 flex gap-1.5 z-40">
                                 {carouselImages.map((_, idx) => (
                                     <button
                                         key={idx}
                                         onClick={() => setCurrentImage(idx)}
-                                        className={`h-1.5 rounded-full transition-all duration-500 ease-out ${idx === currentImage
-                                            ? 'bg-rona-blue w-8 shadow-[0_0_12px_rgba(32,163,171,0.4)]'
-                                            : 'bg-slate-300 w-2 hover:bg-slate-400 hover:w-4'
-                                            }`}
+                                        className="w-6 h-6 flex items-center justify-center rounded-full transition-all duration-300 active:scale-90"
                                         aria-label={`Go to slide ${idx + 1}`}
-                                    />
+                                    >
+                                        <span
+                                            className={`h-1.5 rounded-full transition-all duration-500 ease-out ${idx === currentImage
+                                                ? 'bg-rona-blue w-8 shadow-[0_0_12px_rgba(32,163,171,0.4)]'
+                                                : 'bg-slate-300 w-2 hover:bg-slate-400 hover:w-4'
+                                                }`}
+                                        />
+                                    </button>
                                 ))}
                             </div>
                         </motion.div>
@@ -126,9 +132,9 @@ const About = () => {
                             whileInView={{ opacity: 1, scale: 1, y: 0 }}
                             viewport={{ once: true }}
                             transition={{ duration: 0.7, delay: 0.6, ease: [0.16, 1, 0.3, 1] }}
-                            className="absolute right-0 sm:-right-6 -bottom-8 sm:bottom-8 z-50 bg-white/70 backdrop-blur-lg p-1.5 rounded-[1.25rem] shadow-[0_15px_35px_rgba(0,0,0,0.1)] border border-white/50 pointer-events-none"
+                            className="absolute right-0 sm:-right-6 -bottom-6 sm:bottom-8 z-50 bg-white/70 backdrop-blur-lg p-1.5 rounded-[1.25rem] shadow-[0_15px_35px_rgba(0,0,0,0.1)] border border-white/50 pointer-events-none"
                         >
-                            <div className="bg-gradient-to-br from-white/90 to-white/40 border border-white/60 py-2.5 px-4 rounded-2xl flex items-center gap-3">
+                                <div className="bg-gradient-to-br from-white/90 to-white/40 border border-white/60 py-2 px-3 sm:py-2.5 sm:px-4 rounded-2xl flex items-center gap-2.5 sm:gap-3">
                                 <div className="w-10 h-10 rounded-xl bg-gradient-to-br from-rona-blue to-rona-mint flex items-center justify-center shadow-inner">
                                     <ShieldCheck className="w-5 h-5 text-white" />
                                 </div>
@@ -161,24 +167,24 @@ const About = () => {
                                 Tentang Kami
                             </div>
 
-                            <h2 className="text-[2.1rem] sm:text-4xl lg:text-[2.75rem] font-extrabold text-[#111827] leading-[1.15] mb-6 tracking-tight">
+                            <h2 className="text-[1.95rem] sm:text-4xl lg:text-[2.75rem] font-extrabold text-[#111827] leading-[1.15] mb-5 sm:mb-6 tracking-tight">
                                 Mitra Perjalanan
                                 <span className="block mt-1 text-transparent bg-clip-text bg-gradient-to-r from-rona-blue to-rona-mint italic pr-2 pb-1">
                                     Terpercaya Anda
                                 </span>
                             </h2>
 
-                            <div className="space-y-5 text-slate-600 text-[15px] sm:text-base leading-[1.7] max-w-lg">
+                            <div className="space-y-4 sm:space-y-5 text-slate-600 text-[14px] sm:text-base leading-[1.7] max-w-lg">
                                 <p>
-                                    Udah 10 tahun lebih Rona Jaya Trans konsisten jadi pioneer di aspal nusantara. Kita nggak cuma sekadar nganterin kamu, tapi kurasi journey yang safe, comfy, dan pastinya auto-smooth dengan inovasi fleet terbaru.
+                                    Lebih dari 10 tahun, Rona Jaya Trans konsisten melayani perjalanan antarkota dengan standar keamanan dan kenyamanan yang terjaga. Kami terus meningkatkan kualitas armada agar setiap perjalanan terasa lebih tenang dan menyenangkan.
                                 </p>
                                 <p>
-                                    Tim pro kami siap sat-set buat menuhi kebutuhan travel kamu, mau itu hustle buat bisnis atau sekadar healing-leisure yang chill. Bersama kami, tiap kilometer jadi memori yang worth it.
+                                    Tim kami siap membantu kebutuhan perjalanan Anda, baik untuk urusan bisnis maupun perjalanan bersama keluarga. Dengan layanan yang responsif dan profesional, setiap kilometer menjadi pengalaman yang lebih efisien dan berkesan.
                                 </p>
                             </div>
                         </motion.div>
 
-                        <div className="grid grid-cols-2 gap-3 sm:gap-4 pt-6 border-t border-slate-200/60 mt-2">
+                        <div className="grid grid-cols-1 sm:grid-cols-2 gap-3 sm:gap-4 pt-5 sm:pt-6 border-t border-slate-200/60 mt-2">
                             {features.map((feature, idx) => {
                                 const isFirst = idx === 0;
                                 return (

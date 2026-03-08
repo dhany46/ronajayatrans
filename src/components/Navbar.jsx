@@ -26,21 +26,22 @@ const Navbar = () => {
 
     const waLink = createWhatsAppLink();
 
-    const isBlogPage = location.pathname === '/blog';
+    const isBlogPage = location.pathname.startsWith('/blog');
 
     return (
-        <nav className={`fixed w-full z-50 transition-all duration-300 ${isScrolled || isBlogPage ? 'bg-[#0a1628]/95 backdrop-blur-md shadow-lg shadow-black/10 py-3' : 'bg-transparent py-5'}`}>
+        <nav className={`fixed w-full z-50 transition-all duration-300 ${isScrolled || isBlogPage ? 'bg-[#0a1628]/95 backdrop-blur-md shadow-lg shadow-black/10 py-2.5 sm:py-3' : 'bg-transparent py-3.5 sm:py-5'}`}>
             <div className="max-w-7xl mx-auto px-4 sm:px-6 lg:px-8">
                 <div className="flex justify-between items-center">
                     {/* Logo Area */}
                     <div className="flex-shrink-0 flex items-center">
-                        <Link to="/" className="flex items-center gap-2 group">
+                        <Link to="/" className="flex items-center gap-2 sm:gap-2 group">
                             <img
                                 src={logo}
                                 alt="Rona Jaya Trans"
-                                className="h-14 w-auto object-contain transition-all duration-300"
+                                decoding="async"
+                                className="h-10 sm:h-14 w-auto object-contain transition-all duration-300"
                             />
-                            <span className="text-2xl font-black italic tracking-tight bg-clip-text text-transparent bg-gradient-to-r from-rona-blue to-rona-mint">
+                            <span className="hidden sm:block text-2xl font-black italic tracking-tight bg-clip-text text-transparent bg-gradient-to-r from-rona-blue to-rona-mint">
                                 Rona Jaya Trans
                             </span>
                         </Link>
@@ -62,7 +63,7 @@ const Navbar = () => {
                             target="_blank"
                             rel="noopener noreferrer"
                             aria-label="Pesan sekarang lewat WhatsApp"
-                            className="flex items-center gap-2 bg-[#25D366] text-white px-5 py-2.5 rounded-full font-semibold hover:bg-[#1fb85a] transition-colors shadow-lg shadow-[#25D366]/30"
+                            className="flex items-center gap-2 bg-[#25D366] text-white px-5 py-2.5 rounded-full font-semibold hover:bg-[#1fb85a] active:scale-95 active:bg-[#1a9d4a] transition-all shadow-lg shadow-[#25D366]/30"
                         >
                             <MessageCircle size={18} />
                             <span>Pesan Sekarang</span>
@@ -73,7 +74,10 @@ const Navbar = () => {
                     <div className="md:hidden flex items-center">
                         <button
                             onClick={() => setIsOpen(!isOpen)}
-                            className="p-2 rounded-md text-white"
+                            aria-label={isOpen ? 'Tutup menu navigasi' : 'Buka menu navigasi'}
+                            aria-expanded={isOpen}
+                            aria-controls="mobile-navigation"
+                            className="p-2.5 rounded-md text-white"
                         >
                             {isOpen ? <X size={24} /> : <Menu size={24} />}
                         </button>
@@ -83,13 +87,13 @@ const Navbar = () => {
 
             {/* Mobile Menu */}
             {isOpen && (
-                <div className="md:hidden bg-[#0a1628] shadow-xl absolute top-full left-0 w-full animate-in slide-in-from-top-2 duration-200 border-t border-white/10">
+                <div id="mobile-navigation" className="md:hidden bg-[#0a1628] shadow-xl absolute top-full left-0 w-full animate-in slide-in-from-top-2 duration-200 border-t border-white/10">
                     <div className="px-4 pt-2 pb-6 space-y-1">
                         {navLinks.map((link) => (
                             <Link
                                 key={link.name}
                                 to={link.href}
-                                className="block px-3 py-3 rounded-md text-base font-medium text-white/80 hover:text-rona-mint hover:bg-white/5"
+                                className="block px-3 py-3 rounded-md text-base font-medium text-white/80 hover:text-rona-mint hover:bg-white/5 active:bg-white/10 active:scale-[0.98] transition-all"
                                 onClick={() => setIsOpen(false)}
                             >
                                 {link.name}

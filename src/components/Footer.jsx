@@ -15,13 +15,13 @@ const Footer = () => {
                     {/* Brand & Area */}
                     <div className="lg:col-span-1">
                         <Link to="/" className="flex items-center gap-2.5 mb-6 group">
-                            <img src={logo} alt="Rona Jaya Trans" className="h-8 sm:h-10 w-auto object-contain" />
+                            <img src={logo} alt="Rona Jaya Trans" loading="lazy" decoding="async" className="h-8 sm:h-10 w-auto object-contain" />
                             <span className="text-xl sm:text-2xl font-black italic leading-none tracking-tight bg-clip-text text-transparent bg-gradient-to-r from-rona-blue to-rona-mint">
                                 Rona Jaya Trans
                             </span>
                         </Link>
                         <p className="text-slate-400 leading-relaxed mb-6">
-                            Melayani perjalanan travel door to door, carter mobil, dan pengiriman paket untuk rute Kuningan, Cirebon, Majalengka, Indramayu, hingga Jabodetabek.
+                            Menyediakan layanan travel door to door, carter mobil, dan pengiriman paket untuk rute Kuningan, Cirebon, Majalengka, Indramayu, hingga Jabodetabek.
                         </p>
                         <div className="flex gap-4">
                             <a
@@ -60,10 +60,10 @@ const Footer = () => {
                     <div>
                         <h4 className="font-bold text-lg mb-6 border-b border-slate-700 pb-2 inline-block">Layanan Kami</h4>
                         <ul className="space-y-4">
-                            <li><Link to="/#features" className="text-slate-400 hover:text-rona-mint transition-colors flex items-center gap-2"><div className="w-1.5 h-1.5 rounded-full bg-rona-blue" /> Travel Antar Kota</Link></li>
-                            <li><Link to="/#features" className="text-slate-400 hover:text-rona-mint transition-colors flex items-center gap-2"><div className="w-1.5 h-1.5 rounded-full bg-rona-blue" /> Pengiriman Paket Kilat</Link></li>
-                            <li><Link to="/#features" className="text-slate-400 hover:text-rona-mint transition-colors flex items-center gap-2"><div className="w-1.5 h-1.5 rounded-full bg-rona-blue" /> Sewa Mobil Pariwisata</Link></li>
-                            <li><Link to="/#routes" className="text-slate-400 hover:text-rona-mint transition-colors flex items-center gap-2"><div className="w-1.5 h-1.5 rounded-full bg-rona-blue" /> Info Tarif & Rute</Link></li>
+                            <li><Link to="/#routes" className="text-slate-400 hover:text-rona-mint active:text-rona-mint/80 transition-colors flex items-center gap-2"><div className="w-1.5 h-1.5 rounded-full bg-rona-blue" /> Travel Antar Kota</Link></li>
+                            <li><Link to="/#home" className="text-slate-400 hover:text-rona-mint active:text-rona-mint/80 transition-colors flex items-center gap-2"><div className="w-1.5 h-1.5 rounded-full bg-rona-blue" /> Pengiriman Paket Kilat</Link></li>
+                            <li><Link to="/#home" className="text-slate-400 hover:text-rona-mint active:text-rona-mint/80 transition-colors flex items-center gap-2"><div className="w-1.5 h-1.5 rounded-full bg-rona-blue" /> Sewa Mobil Pariwisata</Link></li>
+                            <li><Link to="/#routes" className="text-slate-400 hover:text-rona-mint active:text-rona-mint/80 transition-colors flex items-center gap-2"><div className="w-1.5 h-1.5 rounded-full bg-rona-blue" /> Info Tarif & Rute</Link></li>
                         </ul>
                     </div>
 
@@ -87,7 +87,7 @@ const Footer = () => {
                                     target="_blank"
                                     rel="noopener noreferrer"
                                     aria-label="Chat WhatsApp Rona Jaya Trans"
-                                    className="w-12 h-12 rounded-xl bg-rona-blue/20 text-rona-mint flex items-center justify-center shrink-0 hover:bg-rona-mint hover:text-slate-900 transition-colors"
+                                    className="w-12 h-12 rounded-xl bg-rona-blue/20 text-rona-mint flex items-center justify-center shrink-0 hover:bg-rona-mint hover:text-slate-900 active:scale-95 transition-all"
                                 >
                                     <MessageCircle size={24} />
                                 </a>
@@ -118,10 +118,10 @@ const Footer = () => {
                 </div>
 
                 <div className="border-t border-slate-800 pt-8 mt-12 text-center flex flex-col md:flex-row justify-between items-center gap-4">
-                    <p className="text-slate-500 text-sm">
+                    <p className="text-slate-300 text-sm">
                         © {new Date().getFullYear()} Rona Jaya Trans. All rights reserved.
                     </p>
-                    <div className="flex gap-4 text-sm text-slate-500">
+                    <div className="flex gap-4 text-sm text-slate-300">
                         <Link to="/privacy-policy" className="hover:text-white transition-colors">Privacy Policy</Link>
                         <Link to="/terms-of-service" className="hover:text-white transition-colors">Terms of Service</Link>
                     </div>

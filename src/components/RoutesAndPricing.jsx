@@ -1,4 +1,4 @@
-import React, { useState, useMemo } from 'react';
+import React, { useState, useMemo, useId } from 'react';
 import { MapPin, ArrowRight, Phone, Clock, ChevronDown, Search, X, Wallet } from 'lucide-react';
 import { motion, AnimatePresence } from 'framer-motion';
 import { createWhatsAppLink } from '../utils/whatsapp';
@@ -15,7 +15,7 @@ const RoutesAndPricing = () => {
         return { basePrice, finalPrice };
     };
 
-    const routes = [
+    const routes = useMemo(() => [
         // KUNINGAN
         { from: 'Kuningan', to: 'Jakarta', price: 'Rp 200.000', freq: 'Mulai Pukul 18.00 WIB' },
         { from: 'Kuningan', to: 'Bogor', price: 'Rp 200.000', freq: 'Mulai Pukul 18.00 WIB' },
@@ -87,20 +87,22 @@ const RoutesAndPricing = () => {
         { from: 'Bandara Soekarno-Hatta', to: 'Cikarang', price: 'Rp 300.000', freq: 'Mulai Pukul 18.00 WIB' },
         { from: 'Bandara Soekarno-Hatta', to: 'Karawang', price: 'Rp 300.000', freq: 'Mulai Pukul 18.00 WIB' },
         { from: 'Bandara Soekarno-Hatta', to: 'Purwakarta', price: 'Rp 300.000', freq: 'Mulai Pukul 18.00 WIB' },
-    ];
+    ], []);
 
     // Unique origin cities (all cities)
     const fromCities = useMemo(() => {
         const cities = new Set();
         routes.forEach(r => { cities.add(r.from); cities.add(r.to); });
         return [...cities].sort();
-    }, []);
+    }, [routes]);
 
     // Search state
     const [fromCity, setFromCity] = useState('');
     const [toCity, setToCity] = useState('');
     const [searchResult, setSearchResult] = useState(null);
     const [hasSearched, setHasSearched] = useState(false);
+    const fromListboxId = useId();
+    const toListboxId = useId();
     
     // Dropdown state
     const [isFromOpen, setIsFromOpen] = useState(false);
@@ -112,7 +114,7 @@ const RoutesAndPricing = () => {
         const cities = new Set();
         routes.filter(r => r.from === fromCity).forEach(r => cities.add(r.to));
         return [...cities].sort();
-    }, [fromCity]);
+    }, [fromCity, routes]);
 
     const handleSearch = () => {
         if (!fromCity || !toCity) return;
@@ -153,11 +155,11 @@ const RoutesAndPricing = () => {
     const promoPricing = searchResult ? getPromoPricing(searchResult.price) : null;
 
     return (
-        <section id="routes" className="pt-12 sm:pt-16 pb-16 sm:pb-24 bg-[#edf3fb]">
+        <section id="routes" className="pt-10 sm:pt-16 pb-14 sm:pb-24 bg-[#edf3fb]">
             <div className="max-w-7xl mx-auto px-4 sm:px-6 lg:px-8">
 
                 {/* Header */}
-                <div className="mb-12">
+                <div className="mb-9 sm:mb-12">
                     <motion.div
                         initial={{ opacity: 0, y: 20 }}
                         whileInView={{ opacity: 1, y: 0 }}
@@ -170,18 +172,18 @@ const RoutesAndPricing = () => {
                             Rute & Harga
                         </div>
 
-                        <h2 className="text-[2.1rem] sm:text-4xl lg:text-[2.75rem] font-extrabold text-[#111827] leading-[1.15] mb-6 tracking-tight">
+                        <h2 className="text-[1.95rem] sm:text-4xl lg:text-[2.75rem] font-extrabold text-[#111827] leading-[1.15] mb-5 sm:mb-6 tracking-tight">
                             Cek Rute & <span className="text-transparent bg-clip-text bg-gradient-to-r from-rona-blue to-rona-mint italic">Harga Terbaik</span>
                         </h2>
 
-                        <p className="text-[15px] sm:text-base text-slate-600 leading-[1.7] max-w-2xl mx-auto">
+                        <p className="text-[14px] sm:text-base text-slate-600 leading-[1.7] max-w-2xl mx-auto">
                             Temukan rute perjalanan favorit Anda dengan harga kompetitif dan fasilitas terbaik.
                         </p>
                     </motion.div>
                 </div>
 
                 {/* 2-Column Layout: Left = Price Checker, Right = Price Table */}
-                <div className="flex flex-col lg:flex-row gap-8 lg:gap-12">
+                <div className="flex flex-col lg:flex-row gap-6 sm:gap-8 lg:gap-12">
 
                     {/* Left Column: Price Checker */}
                     <motion.div
@@ -191,19 +193,19 @@ const RoutesAndPricing = () => {
                         transition={{ duration: 0.5, delay: 0.1 }}
                         className="w-full lg:w-[45%] xl:w-[40%]"
                     >
-                        <div className="relative bg-white border border-slate-200 rounded-2xl p-5 sm:p-7 lg:sticky lg:top-28 shadow-lg">
+                        <div className="relative bg-white border border-slate-200 rounded-2xl p-4 sm:p-7 lg:sticky lg:top-28 shadow-lg">
                             
-                            <div className="relative flex items-center gap-3 mb-7">
+                            <div className="relative flex items-center gap-3 mb-5 sm:mb-7">
                                 <div className="w-10 h-10 rounded-xl bg-gradient-to-br from-rona-blue to-rona-mint flex items-center justify-center shadow-sm">
                                     <Search size={18} className="text-white" strokeWidth={2.5} />
                                 </div>
                                 <div>
-                                    <h4 className="text-lg font-bold text-slate-800 leading-tight">Cari Rute Perjalanan</h4>
+                                    <h3 className="text-[17px] sm:text-lg font-bold text-slate-800 leading-tight">Cari Rute Perjalanan</h3>
                                     <p className="text-[12px] text-slate-500 mt-0.5">Cek ketersediaan & harga</p>
                                 </div>
                             </div>
 
-                            <div className="relative space-y-4 sm:space-y-5">
+                            <div className="relative space-y-3.5 sm:space-y-5">
                                 {/* From Select */}
                                 <div className={`relative ${isFromOpen ? 'z-50' : 'z-10'}`}>
                                     <label className="text-[11px] font-semibold text-slate-500 uppercase tracking-widest mb-2.5 flex items-center gap-1.5">
@@ -213,7 +215,19 @@ const RoutesAndPricing = () => {
                                         <button
                                             type="button"
                                             onClick={() => setIsFromOpen(!isFromOpen)}
-                                            className="w-full pl-5 pr-11 py-3.5 sm:py-4 rounded-xl bg-slate-50 border border-slate-200 text-[15px] font-medium text-slate-700 text-left hover:bg-white hover:border-slate-300 focus:outline-none focus:ring-2 focus:ring-rona-blue/20 focus:border-rona-blue/40 focus:bg-white transition-all flex items-center justify-between"
+                                            onKeyDown={(event) => {
+                                                if (event.key === 'Enter' || event.key === ' ') {
+                                                    event.preventDefault();
+                                                    setIsFromOpen((prev) => !prev);
+                                                }
+                                                if (event.key === 'Escape') {
+                                                    setIsFromOpen(false);
+                                                }
+                                            }}
+                                            aria-haspopup="listbox"
+                                            aria-expanded={isFromOpen}
+                                            aria-controls={fromListboxId}
+                                            className="w-full pl-4 sm:pl-5 pr-10 sm:pr-11 py-3 sm:py-4 rounded-xl bg-slate-50 border border-slate-200 text-[14px] sm:text-[15px] font-medium text-slate-700 text-left hover:bg-white hover:border-slate-300 focus:outline-none focus:ring-2 focus:ring-rona-blue/20 focus:border-rona-blue/40 focus:bg-white active:scale-[0.99] transition-all flex items-center justify-between"
                                         >
                                             <span className={fromCity ? 'text-slate-700' : 'text-slate-500'}>
                                                 {fromCity || 'Pilih kota asal'}
@@ -230,22 +244,32 @@ const RoutesAndPricing = () => {
                                                         animate={{ opacity: 1, y: 0, scale: 1 }}
                                                         exit={{ opacity: 0, y: -10, scale: 0.95 }}
                                                         transition={{ duration: 0.2 }}
+                                                        id={fromListboxId}
+                                                        role="listbox"
+                                                        tabIndex={-1}
+                                                        onKeyDown={(event) => {
+                                                            if (event.key === 'Escape') {
+                                                                setIsFromOpen(false);
+                                                            }
+                                                        }}
                                                         className="absolute left-0 right-0 z-50 mt-2 bg-white border border-slate-200 rounded-xl overflow-hidden shadow-xl max-h-[280px] sm:max-h-64 overflow-y-auto scrollbar-thin scrollbar-thumb-slate-300 scrollbar-track-slate-100"
                                                     >
                                                         {fromCities.map((city) => (
                                                             <button
                                                                 key={city}
                                                                 type="button"
+                                                                role="option"
+                                                                aria-selected={fromCity === city}
                                                                 onClick={() => {
                                                                     setFromCity(city);
                                                                     setToCity('');
                                                                     setHasSearched(false);
                                                                     setIsFromOpen(false);
                                                                 }}
-                                                                className={`w-full px-5 py-3.5 text-[15px] text-left transition-colors flex items-center justify-between border-b border-slate-100 last:border-0 ${
+                                                                className={`w-full px-4 sm:px-5 py-3 text-[14px] sm:text-[15px] text-left transition-all flex items-center justify-between border-b border-slate-100 last:border-0 ${
                                                                     fromCity === city
                                                                         ? 'bg-rona-blue/5 text-rona-blue font-semibold'
-                                                                        : 'text-slate-700 hover:bg-slate-50 active:bg-slate-100'
+                                                                        : 'text-slate-700 hover:bg-slate-50 active:bg-slate-100 active:scale-[0.98]'
                                                                 }`}
                                                             >
                                                                 {city}
@@ -277,8 +301,20 @@ const RoutesAndPricing = () => {
                                         <button
                                             type="button"
                                             onClick={() => fromCity && setIsToOpen(!isToOpen)}
+                                            onKeyDown={(event) => {
+                                                if ((event.key === 'Enter' || event.key === ' ') && fromCity) {
+                                                    event.preventDefault();
+                                                    setIsToOpen((prev) => !prev);
+                                                }
+                                                if (event.key === 'Escape') {
+                                                    setIsToOpen(false);
+                                                }
+                                            }}
+                                            aria-haspopup="listbox"
+                                            aria-expanded={isToOpen}
+                                            aria-controls={toListboxId}
                                             disabled={!fromCity}
-                                            className="w-full pl-5 pr-11 py-3.5 sm:py-4 rounded-xl bg-slate-50 border border-slate-200 text-[15px] font-medium text-slate-700 text-left hover:bg-white hover:border-slate-300 focus:outline-none focus:ring-2 focus:ring-rona-blue/20 focus:border-rona-blue/40 focus:bg-white transition-all flex items-center justify-between disabled:opacity-50 disabled:cursor-not-allowed disabled:hover:bg-slate-50 disabled:hover:border-slate-200"
+                                            className="w-full pl-4 sm:pl-5 pr-10 sm:pr-11 py-3 sm:py-4 rounded-xl bg-slate-50 border border-slate-200 text-[14px] sm:text-[15px] font-medium text-slate-700 text-left hover:bg-white hover:border-slate-300 focus:outline-none focus:ring-2 focus:ring-rona-blue/20 focus:border-rona-blue/40 focus:bg-white transition-all flex items-center justify-between disabled:opacity-50 disabled:cursor-not-allowed disabled:hover:bg-slate-50 disabled:hover:border-slate-200"
                                         >
                                             <span className={toCity ? 'text-slate-700' : 'text-slate-500'}>
                                                 {toCity || (fromCity ? 'Pilih kota tujuan' : 'Pilih kota asal dulu')}
@@ -295,18 +331,28 @@ const RoutesAndPricing = () => {
                                                         animate={{ opacity: 1, y: 0, scale: 1 }}
                                                         exit={{ opacity: 0, y: -10, scale: 0.95 }}
                                                         transition={{ duration: 0.2 }}
+                                                        id={toListboxId}
+                                                        role="listbox"
+                                                        tabIndex={-1}
+                                                        onKeyDown={(event) => {
+                                                            if (event.key === 'Escape') {
+                                                                setIsToOpen(false);
+                                                            }
+                                                        }}
                                                         className="absolute left-0 right-0 z-50 mt-2 bg-white border border-slate-200 rounded-xl overflow-hidden shadow-xl max-h-[280px] sm:max-h-64 overflow-y-auto scrollbar-thin scrollbar-thumb-slate-300 scrollbar-track-slate-100"
                                                     >
                                                         {toCities.map((city) => (
                                                             <button
                                                                 key={city}
                                                                 type="button"
+                                                                role="option"
+                                                                aria-selected={toCity === city}
                                                                 onClick={() => {
                                                                     setToCity(city);
                                                                     setHasSearched(false);
                                                                     setIsToOpen(false);
                                                                 }}
-                                                                className={`w-full px-5 py-3.5 text-[15px] text-left transition-colors flex items-center justify-between border-b border-slate-100 last:border-0 ${
+                                                                className={`w-full px-4 sm:px-5 py-3 text-[14px] sm:text-[15px] text-left transition-colors flex items-center justify-between border-b border-slate-100 last:border-0 ${
                                                                     toCity === city
                                                                         ? 'bg-rona-blue/5 text-rona-blue font-semibold'
                                                                         : 'text-slate-700 hover:bg-slate-50 active:bg-slate-100'
@@ -329,7 +375,7 @@ const RoutesAndPricing = () => {
                                 <button
                                     onClick={handleSearch}
                                     disabled={!fromCity || !toCity}
-                                    className="w-full px-6 py-3.5 sm:py-4 rounded-xl bg-gradient-to-r from-rona-blue to-rona-blue/90 hover:from-rona-blue/90 hover:to-rona-blue/80 text-white text-[15px] font-bold shadow-lg shadow-rona-blue/20 hover:shadow-xl hover:shadow-rona-blue/30 disabled:opacity-40 disabled:cursor-not-allowed transition-all duration-300 hover:-translate-y-0.5 disabled:hover:translate-y-0 active:scale-[0.98] flex items-center justify-center gap-2 mt-2"
+                                    className="w-full px-6 py-3 sm:py-4 rounded-xl bg-gradient-to-r from-rona-blue to-rona-blue/90 hover:from-rona-blue/90 hover:to-rona-blue/80 text-white text-[14px] sm:text-[15px] font-bold shadow-lg shadow-rona-blue/20 hover:shadow-xl hover:shadow-rona-blue/30 disabled:opacity-40 disabled:cursor-not-allowed transition-all duration-300 hover:-translate-y-0.5 disabled:hover:translate-y-0 active:scale-[0.98] flex items-center justify-center gap-2 mt-1 sm:mt-2"
                                 >
                                     <Search size={17} />
                                     Cek Harga
@@ -347,7 +393,7 @@ const RoutesAndPricing = () => {
                                         className="overflow-hidden relative"
                                     >
                                         {searchResult ? (
-                                            <div className="relative overflow-hidden rounded-2xl border border-slate-200 bg-white p-4 sm:p-5 shadow-[0_14px_30px_-18px_rgba(15,23,42,0.28)]">
+                                            <div className="relative overflow-hidden rounded-2xl border border-slate-200 bg-white p-3.5 sm:p-5 shadow-[0_14px_30px_-18px_rgba(15,23,42,0.28)]">
                                                 <div className="absolute inset-x-0 top-0 h-1 bg-gradient-to-r from-rona-blue via-rona-mint to-rona-blue/70" />
 
                                                 <div className="mt-2 px-1">
@@ -356,7 +402,7 @@ const RoutesAndPricing = () => {
                                                         <span className="text-[10px] font-semibold uppercase tracking-[0.08em] text-emerald-700">Promo Aktif</span>
                                                     </div>
 
-                                                    <div className="mt-3 space-y-2.5 text-[13px] leading-relaxed">
+                                                    <div className="mt-3 space-y-2 text-[12px] sm:text-[13px] leading-relaxed">
                                                         <div className="flex items-start justify-between gap-3 border-b border-dashed border-slate-200 pb-2.5">
                                                             <span className="text-slate-500">Rute</span>
                                                             <span className="text-right font-semibold text-slate-900">{searchResult.from} {'->'} {searchResult.to}</span>
@@ -378,21 +424,21 @@ const RoutesAndPricing = () => {
                                                         </div>
 
                                                         <div className="flex items-end justify-between gap-3 pt-1">
-                                                            <span className="text-[11px] font-semibold uppercase tracking-[0.08em] text-slate-600">Total Bayar</span>
-                                                            <span className="text-[1.85rem] leading-none font-bold tracking-tight text-rona-blue">{formatRupiah(promoPricing.finalPrice)}</span>
+                                                            <span className="text-[10px] sm:text-[11px] font-semibold uppercase tracking-[0.08em] text-slate-600">Total Bayar</span>
+                                                            <span className="text-[1.65rem] sm:text-[1.85rem] leading-none font-bold tracking-tight text-rona-blue">{formatRupiah(promoPricing.finalPrice)}</span>
                                                         </div>
                                                     </div>
 
-                                                    <div className="mt-4 flex flex-col gap-2.5 border-t border-slate-200 pt-3.5">
+                                                    <div className="mt-3.5 flex flex-col gap-2.5 border-t border-slate-200 pt-3">
                                                         <button
                                                             type="button"
                                                             onClick={() => handleRouteBooking(searchResult)}
-                                                            className="w-full rounded-xl bg-gradient-to-r from-rona-mint to-[#37b68d] px-4 py-3 text-[14px] font-semibold text-white shadow-[0_14px_28px_-14px_rgba(76,201,161,0.7)] transition-all duration-300 hover:-translate-y-0.5 hover:shadow-[0_18px_36px_-14px_rgba(76,201,161,0.75)] active:scale-[0.98]"
+                                                            className="w-full rounded-xl bg-gradient-to-r from-rona-mint to-[#37b68d] px-4 py-3 text-[13px] sm:text-[14px] font-semibold text-white shadow-[0_14px_28px_-14px_rgba(76,201,161,0.7)] transition-all duration-300 hover:-translate-y-0.5 hover:shadow-[0_18px_36px_-14px_rgba(76,201,161,0.75)] active:scale-95 active:shadow-[0_10px_20px_-10px_rgba(76,201,161,0.6)]"
                                                         >
                                                             Pesan via WhatsApp
                                                         </button>
 
-                                                        <button onClick={handleReset} className="inline-flex items-center gap-1.5 self-start text-[12px] font-semibold text-rona-blue transition-colors hover:text-rona-blue/80">
+                                                        <button onClick={handleReset} className="inline-flex items-center gap-1.5 self-start text-[12px] font-semibold text-rona-blue transition-colors hover:text-rona-blue/80 active:text-rona-blue/60">
                                                             <X size={13} /> Reset Pencarian
                                                         </button>
                                                     </div>
@@ -404,7 +450,7 @@ const RoutesAndPricing = () => {
                                                     Rute <span className="font-semibold text-slate-800">{fromCity}</span> → <span className="font-semibold text-slate-800">{toCity}</span> belum tersedia.
                                                 </p>
                                                 <p className="text-[12px] text-slate-500 mt-2">Hubungi CS kami untuk informasi rute ini.</p>
-                                                <button onClick={handleReset} className="mt-3 text-rona-blue text-xs font-semibold hover:text-rona-blue/80 transition-colors">Reset Pencarian</button>
+                                                <button onClick={handleReset} className="mt-3 text-rona-blue text-xs font-semibold hover:text-rona-blue/80 active:text-rona-blue/60 transition-colors">Reset Pencarian</button>
                                             </div>
                                         )}
                                     </motion.div>
@@ -423,7 +469,7 @@ const RoutesAndPricing = () => {
                     </motion.div>
 
                     {/* Right Column: Route Results */}
-                    <div className="w-full lg:w-[55%] xl:w-[60%]">
+                    <div className="hidden lg:block lg:w-[55%] xl:w-[60%]">
                         <AnimatePresence mode="wait">
                             {fromCity && toCities.length > 0 ? (
                                 <motion.div
@@ -439,7 +485,7 @@ const RoutesAndPricing = () => {
                                             <div className="w-7 h-7 rounded-lg bg-white/15 flex items-center justify-center">
                                                 <MapPin size={14} className="text-white" strokeWidth={2.5} />
                                             </div>
-                                            <h4 className="text-white text-sm font-bold tracking-wide">Rute dari {fromCity}</h4>
+                                            <p className="text-white text-sm font-bold tracking-wide">Rute dari {fromCity}</p>
                                         </div>
 
                                         {/* Route Rows */}
@@ -451,7 +497,7 @@ const RoutesAndPricing = () => {
                                                     animate={{ opacity: 1, x: 0 }}
                                                     transition={{ delay: idx * 0.05, duration: 0.3 }}
                                                     onClick={() => { setToCity(route.to); setSearchResult(route); setHasSearched(true); }}
-                                                    className={`flex items-center justify-between px-5 py-4 hover:bg-white transition-all cursor-pointer group ${toCity === route.to ? 'bg-white ring-1 ring-rona-blue/10' : ''
+                                                    className={`flex items-center justify-between px-5 py-4 hover:bg-white transition-all cursor-pointer group active:scale-[0.98] ${toCity === route.to ? 'bg-white ring-1 ring-rona-blue/10' : ''
                                                         }`}
                                                 >
                                                     <div className="flex items-center gap-3 min-w-0 flex-1">
@@ -488,7 +534,7 @@ const RoutesAndPricing = () => {
                                     <div className="w-16 h-16 rounded-2xl bg-slate-50 border border-slate-100 flex items-center justify-center mb-5">
                                         <MapPin size={28} className="text-slate-300" strokeWidth={1.5} />
                                     </div>
-                                    <h4 className="text-lg font-bold text-slate-300 mb-2">Pilih Kota Asal</h4>
+                                    <p className="text-lg font-bold text-slate-300 mb-2">Pilih Kota Asal</p>
                                     <p className="text-sm text-slate-400 max-w-[260px]">
                                         Pilih kota asal di sebelah kiri untuk melihat daftar rute & harga yang tersedia.
                                     </p>

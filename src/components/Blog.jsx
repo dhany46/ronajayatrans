@@ -21,21 +21,21 @@ const Blog = () => {
     };
 
     return (
-        <section id="blog" className="py-16 sm:py-24 bg-[#edf3fb] relative">
+        <section id="blog" className="py-14 sm:py-24 bg-[#edf3fb] relative">
             <div className="max-w-7xl mx-auto px-4 sm:px-6 lg:px-8 relative z-10">
 
                 {/* Header */}
-                <div className="text-center mb-16">
+                <div className="text-center mb-10 sm:mb-16">
                     <div className="inline-flex items-center gap-1.5 px-3.5 py-1.5 rounded-full bg-slate-100/50 border border-slate-200 shadow-sm text-rona-blue text-[13px] font-semibold mb-5 tracking-wide">
                         <Calendar size={16} strokeWidth={2} className="text-rona-blue" />
                         Artikel & Berita
                     </div>
 
-                    <h2 className="text-[2.1rem] sm:text-4xl lg:text-[2.75rem] font-extrabold text-[#111827] leading-[1.15] mb-6 tracking-tight">
+                    <h2 className="text-[1.95rem] sm:text-4xl lg:text-[2.75rem] font-extrabold text-[#111827] leading-[1.15] mb-5 sm:mb-6 tracking-tight">
                         Informasi Terbaru <span className="text-transparent bg-clip-text bg-gradient-to-r from-rona-blue to-rona-mint italic">Seputar Perjalanan Anda</span>
                     </h2>
 
-                    <p className="text-[15px] sm:text-base text-slate-600 leading-[1.7] max-w-2xl mx-auto mb-6">
+                    <p className="text-[14px] sm:text-base text-slate-600 leading-[1.7] max-w-2xl mx-auto mb-5 sm:mb-6">
                         Temukan tips, promo, dan panduan perjalanan terbaru dari Rona Jaya Trans.
                     </p>
 
@@ -51,25 +51,27 @@ const Blog = () => {
                     initial="hidden"
                     whileInView="visible"
                     viewport={{ once: true, margin: "-50px" }}
-                    className="grid md:grid-cols-2 lg:grid-cols-3 gap-8"
+                    className="grid md:grid-cols-2 lg:grid-cols-3 gap-4 sm:gap-8"
                 >
                     {posts.map((post, idx) => (
                         <motion.div key={post.slug} variants={itemVariants} className="bg-slate-50 rounded-3xl overflow-hidden border border-slate-100 hover:shadow-xl transition-all duration-300 group">
 
                             {/* Image Container */}
-                            <div className="relative h-60 overflow-hidden">
+                            <div className="relative h-52 sm:h-60 overflow-hidden">
                                 <div className="absolute top-4 left-4 z-10 bg-white/90 backdrop-blur-sm px-3 py-1 rounded-full text-xs font-bold text-rona-blue shadow-sm">
                                     {post.category}
                                 </div>
                                 <img
                                     src={post.image}
                                     alt={post.title}
+                                    loading="lazy"
+                                    decoding="async"
                                     className="w-full h-full object-cover group-hover:scale-110 transition-transform duration-700 ease-in-out"
                                 />
                             </div>
 
                             {/* Content Container */}
-                            <div className="p-8">
+                            <div className="p-5 sm:p-8">
                                 <div className="flex items-center gap-4 text-xs font-medium text-slate-500 mb-4">
                                     <div className="flex items-center gap-1.5">
                                         <Calendar size={14} className="text-rona-mint" />
@@ -81,17 +83,17 @@ const Blog = () => {
                                     </div>
                                 </div>
 
-                                <h4 className="text-xl font-bold text-slate-900 mb-3 line-clamp-2 group-hover:text-rona-blue transition-colors">
+                                <h3 className="text-[18px] sm:text-xl font-bold text-slate-900 mb-2.5 sm:mb-3 line-clamp-2 group-hover:text-rona-blue transition-colors">
                                     <Link to={`/blog/${post.slug}`}>{post.title}</Link>
-                                </h4>
+                                </h3>
 
-                                <p className="text-slate-600 mb-6 line-clamp-3 leading-relaxed">
+                                <p className="text-[14px] sm:text-base text-slate-600 mb-5 sm:mb-6 line-clamp-3 leading-relaxed">
                                     {post.excerpt}
                                 </p>
 
-                                <Link to={`/blog/${post.slug}`} className="inline-flex items-center gap-2 font-bold text-rona-blue hover:text-rona-mint transition-colors text-sm">
+                                <Link to={`/blog/${post.slug}`} className="inline-flex items-center gap-2 font-bold text-rona-blue hover:text-rona-mint active:text-rona-mint/80 transition-colors text-sm group">
                                     Baca Selengkapnya
-                                    <ArrowRight size={16} />
+                                    <ArrowRight size={16} className="transition-transform duration-200 group-hover:translate-x-1" />
                                 </Link>
                             </div>
 
